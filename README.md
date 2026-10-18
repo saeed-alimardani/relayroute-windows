@@ -18,7 +18,22 @@ The underlying service is offered for use within the browser. Service terms,
 entitlements, limits and protocol compatibility may change; this is not an
 official API or a guaranteed service.
 
-## Install
+## Download and install (Windows 10/11 x64)
+
+1. Download **RelayRoute-Setup-v0.2.0-win-x64.exe** from the
+   [GitHub Releases page](https://github.com/saeed-alimardani/relayroute-windows/releases).
+2. Run the installer and accept Windows administrator privileges.
+3. Open RelayRoute from the Start menu or desktop. Sign in to an eligible
+   Firefox Account on the same Windows user account before connecting.
+4. Click the large power button to connect or disconnect. Minimize to keep
+   RelayRoute in the system tray; closing the app disconnects first.
+
+The installer bundles a self-contained .NET desktop application, Node.js and
+the tunnel engine; **users do not need Node.js or .NET separately installed**.
+The installer is currently unsigned, so Windows may show a publisher warning.
+Verify its SHA-256 against the release notes before opening it.
+
+## Build from source
 
 1. Use **Windows 10/11 x64** with **Node.js 20+** and a signed-in,
    eligible Firefox account.
@@ -26,8 +41,10 @@ official API or a guaranteed service.
 3. Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-Dependencies.ps1`
    in the project directory. This downloads a **pinned, SHA-256-verified**
    tun2proxy/Wintun package from its original publisher.
-4. Run **RelayRoute.cmd**, approve the Windows administrator prompt, and
-   select Connect. When the app is minimized it stays in the system tray.
+4. Run **RelayRoute.cmd** for the old developer interface, or install .NET 8 SDK,
+   Node.js 24 and Inno Setup 6 and execute
+   `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Build-Release.ps1`
+   to build the native installer.
 
 Third-party executables and private Firefox profile data are never included
 in this repository. Review the open-source code and installer before running.
@@ -99,9 +116,10 @@ reports, read [SECURITY.md](SECURITY.md).
 
 ## Diagnostics
 
-Read `.run/status.json` or run `node src/controller.mjs status`. When started
-by the GUI, stdout and stderr are in `.run/controller.out` and
-`.run/controller.err`. Never put account tokens in logs.
+The packaged GUI stores runtime status under
+`%LOCALAPPDATA%\RelayRoute\state\status.json`. Running the controller from
+source uses that same location unless `RELAYROUTE_STATE_DIR` is set. Do not
+put account tokens in logs. For diagnosis, use `node src/controller.mjs status`.
 
 ```powershell
 npm run check

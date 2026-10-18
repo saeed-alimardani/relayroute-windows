@@ -1,0 +1,44 @@
+name: Windows desktop installer
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows-installer:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install Inno Setup
+        shell: powershell
+        run: choco install innosetup -y --no-progress
+      - name: Get verified network dependencies
+        shell: powershell
+        run: .\Install-Dependencies.ps1
+      - name: Build native app and installer
+        shell: powershell
+        run: .\scripts\Build-Release.ps1
+      - name: Test JS controller
+        run: npm test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RelayRoute-Windows-Installer
+          path: build/releases/RelayRoute-Setup-*.exe
+          if-no-files-found: error
+      - name: Publish tagged release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/releases/RelayRoute-Setup-*.exe
+          generate_release_notes: true

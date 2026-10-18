@@ -1,5 +1,9 @@
 .run/
 bin/
+build/
+desktop/bin/
+desktop/obj/
+desktop/.vs/
 node_modules/
 *.log
 .DS_Store

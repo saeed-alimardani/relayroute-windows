@@ -13,7 +13,10 @@ import { createBridge } from './bridge.mjs';
 import { createSocksServer } from './socks.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const RUN = path.join(ROOT, '.run');
+// Installed files live under Program Files. Runtime locks/logs must be writable
+// without modifying the installation directory.
+const RUN = process.env.RELAYROUTE_STATE_DIR ||
+  path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), 'AppData', 'Local'), 'RelayRoute', 'state');
 const LOCK = path.join(RUN, 'controller.lock');
 const STOP = path.join(RUN, 'stop.signal');
 const STATUS = path.join(RUN, 'status.json');

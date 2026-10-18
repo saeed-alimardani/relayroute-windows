@@ -1,0 +1,162 @@
+<Window x:Class="RelayRoute.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RelayRoute" Width="450" Height="690"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
+        Background="Transparent" WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" TextOptions.TextFormattingMode="Display">
+  <Window.Resources>
+    <LinearGradientBrush x:Key="TealGrad" StartPoint="0,0" EndPoint="1,1">
+      <GradientStop Color="#6AEDD0" Offset="0"/>
+      <GradientStop Color="#49CBB9" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="HeroGrad" StartPoint="0,0" EndPoint="1,1">
+      <GradientStop Color="#1C3047" Offset="0"/>
+      <GradientStop Color="#142138" Offset=".58"/>
+      <GradientStop Color="#111D31" Offset="1"/>
+    </LinearGradientBrush>
+  </Window.Resources>
+  <Border CornerRadius="22" Background="{StaticResource BackgroundBrush}"
+          BorderThickness="1" BorderBrush="#34445D">
+    <Grid Margin="28,20,28,25">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="54"/>
+        <RowDefinition Height="15"/>
+        <RowDefinition Height="355"/>
+        <RowDefinition Height="16"/>
+        <RowDefinition Height="112"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0" MouseLeftButtonDown="DragWindow">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="42"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        <Border Width="42" Height="42" CornerRadius="13" Background="#213947"
+                BorderBrush="#406F72" BorderThickness="1">
+          <Path Width="24" Height="24" Stretch="Uniform" Stroke="#6DE7CD" StrokeThickness="2.3"
+                StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                Data="M 1,12 L 8,12 L 11,5 L 15,19 L 18,12 L 24,12"/>
+        </Border>
+        <StackPanel Grid.Column="1" Margin="13,0,0,0" VerticalAlignment="Center">
+          <TextBlock Text="RelayRoute" FontSize="19" FontWeight="SemiBold"
+                     Foreground="#F3F8FF"/>
+          <TextBlock Text="SECURE ROUTING  /  WINDOWS" FontSize="8.7" FontWeight="SemiBold"
+                     Foreground="#8394AA" Margin="1,3,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+          <Button Width="32" Height="32" Style="{StaticResource BareButton}"
+                  Click="MinimizeClick" ToolTip="Minimize to tray" AutomationProperties.Name="Minimize to tray">
+            <Path Stroke="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Button}}"
+                  StrokeThickness="2" Data="M4,12 L18,12" Width="15" Height="15" Stretch="Uniform"/>
+          </Button>
+          <Button Width="32" Height="32" Style="{StaticResource BareButton}"
+                  Click="CloseClick" ToolTip="Exit and disconnect" AutomationProperties.Name="Exit and disconnect">
+            <Path Stroke="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Button}}"
+                  StrokeThickness="2" Data="M4,4 L18,18 M18,4 L4,18" Width="15" Height="15" Stretch="Uniform"/>
+          </Button>
+        </StackPanel>
+      </Grid>
+
+      <Border Grid.Row="2" CornerRadius="21" Background="{StaticResource HeroGrad}"
+              BorderThickness="1" BorderBrush="#32435B">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="174"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+              <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="#93A4BA" Margin="0,0,8,0"
+                       VerticalAlignment="Center"/>
+              <TextBlock x:Name="StatusEyebrow" Text="READY TO CONNECT" Foreground="#A7B8CD"
+                         FontSize="10" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            </StackPanel>
+          </StackPanel>
+          <Grid Grid.Row="1" Width="164" Height="164" HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Ellipse Fill="#183A46" Opacity=".72" Width="164" Height="164"/>
+            <Ellipse Width="146" Height="146" Fill="#192D3D"
+                     Stroke="#3A776F" StrokeThickness="1.5"/>
+            <Button x:Name="PowerButton" Width="122" Height="122"
+                    Click="PowerClick" Cursor="Hand" ToolTip="Connect or disconnect" AutomationProperties.Name="Connect or disconnect VPN">
+              <Button.Template>
+                <ControlTemplate TargetType="Button">
+                  <Border CornerRadius="80" Background="{StaticResource TealGrad}">
+                    <Grid>
+                      <Ellipse Fill="#FFFFFF" Opacity=".055" Margin="6"/>
+                      <Path Stroke="#082A32" StrokeThickness="4.7" Width="45" Height="45"
+                            Stretch="Uniform" StrokeStartLineCap="Round"
+                            StrokeEndLineCap="Round"
+                            Data="M12,2 L12,12 M6.3,5.8 C2,8.2 1,11.5 1,14 C1,20 5.8,24 12,24 C18.2,24 23,20 23,14 C23,11 21.4,7.9 17.7,5.8"/>
+                    </Grid>
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                      <Setter Property="Opacity" Value=".86"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                      <Setter Property="Opacity" Value=".35"/>
+                    </Trigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Button.Template>
+            </Button>
+          </Grid>
+          <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="StatusTitle" Text="Disconnected" FontSize="24"
+                       Foreground="#F0F6FC" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="StatusSubtitle" Text="Press the button to connect"
+                       FontSize="12" Foreground="#9CADC1" Margin="0,7,0,0"
+                       HorizontalAlignment="Center"/>
+          </StackPanel>
+          <Border Grid.Row="3" Width="130" Height="1" Background="#35475D" Margin="0,10,0,0"
+                  VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        </Grid>
+      </Border>
+
+      <Border Grid.Row="4" CornerRadius="17" Background="#172238" BorderBrush="#2B3A52" BorderThickness="1">
+        <Grid Margin="19,15,19,15">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="EXIT IP ADDRESS" FontSize="9" FontWeight="SemiBold" Foreground="#8798AF"/>
+            <TextBlock x:Name="IpLabel" Text="—" FontSize="17" FontWeight="SemiBold"
+                       Foreground="#EFF6FC" Margin="0,10,0,0"/>
+            <TextBlock x:Name="IpHint" Text="Not connected" FontSize="10"
+                       Foreground="#92A3BA" Margin="0,5,0,0"/>
+          </StackPanel>
+          <Border Grid.Column="1" Background="#324158" Margin="0,8,0,8"/>
+          <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="20,0,0,0">
+            <TextBlock Text="CONNECTION" FontSize="9" FontWeight="SemiBold" Foreground="#8798AF"/>
+            <TextBlock Text="TCP + DNS" FontSize="17" FontWeight="SemiBold"
+                       Foreground="#EFF6FC" Margin="0,10,0,0"/>
+            <TextBlock Text="Windows tunnel" FontSize="10" Foreground="#92A3BA" Margin="0,5,0,0"/>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <StackPanel Grid.Row="5" VerticalAlignment="Bottom">
+        <TextBlock x:Name="ErrorLabel" Foreground="#FFA9A9" FontSize="11" TextWrapping="Wrap"
+                   TextAlignment="Center" MaxHeight="38" Margin="0,0,0,12" Visibility="Collapsed"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <Ellipse Width="5" Height="5" Fill="#8D9DB1" VerticalAlignment="Center" Margin="0,0,8,0"/>
+          <TextBlock Text="Experimental · Unofficial · No full kill switch"
+                     Foreground="#8798AD" FontSize="10"/>
+        </StackPanel>
+        <Button Click="AboutClick" Style="{StaticResource BareButton}"
+                Margin="0,12,0,0" HorizontalAlignment="Center" Width="140" Height="25">
+          <TextBlock Text="ABOUT / GITHUB" FontSize="9.5" Foreground="#6FE0C9" FontWeight="SemiBold"/>
+        </Button>
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>
