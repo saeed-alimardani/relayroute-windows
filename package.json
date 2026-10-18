@@ -1,0 +1,12 @@
+{
+  "name": "relayroute-windows",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/bridge.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check src/auth.mjs && node --check src/bridge.mjs && node --check src/controller.mjs && node --check src/dns.mjs && node --check src/socks.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,21 @@
+.run/
+bin/
+node_modules/
+*.log
+.DS_Store
+# Developer experiments from before the maintained controller
+FFVPN.ps1
+Start-VPN.ps1
+Stop-VPN.ps1
+Firefox VPN Bridge.cmd
+Firefox VPN.bat
+# Never commit local settings or credentials
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+signedInUser.json
+profiles.ini
+*.lnk
